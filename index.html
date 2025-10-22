@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thyrocare Bangalore – Home Blood Test Booking</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #fff7f7 0%, #ffe5e5 100%);
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+    }
+    .accent-red { background: #d71920; }
+    .rounded-input { border-radius: 0.75rem; }
+    .fade-bg {
+      background: url('logo-thyrocare.jpg') no-repeat center;
+      background-size: 60%;
+      opacity: 0.05;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .floating-buttons {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 50;
+    }
+    .float-btn {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: #25D366;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .float-btn:hover { transform: scale(1.1); }
+    .contact-list {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      position: absolute;
+      bottom: 65px;
+      right: 0;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .contact-list a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #333;
+      text-decoration: none;
+    }
+    .contact-list a:hover { color: #d71920; }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="logo-thyrocare.jpg" alt="Thyrocare Logo" class="h-10 w-auto rounded-md" />
+        <div>
+          <h1 class="text-lg font-semibold text-gray-900">Thyrocare Bangalore</h1>
+          <p class="text-xs text-gray-500">Trusted Home Collection Partner</p>
+        </div>
+      </div>
+      <a href="#booking" class="px-4 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition">
+        Book Now
+      </a>
+    </div>
+    <div class="h-1 accent-red"></div>
+  </header>
+
+  <main class="flex-1 relative overflow-hidden">
+    <div class="fade-bg"></div>
+    <div id="booking" class="relative z-10 max-w-md md:max-w-2xl mx-auto my-8 bg-white/90 rounded-2xl shadow-lg p-6 md:p-8 backdrop-blur">
+      <h2 class="text-2xl md:text-3xl font-bold text-center text-red-600 mb-2">Book Your Blood Test Instantly 🧪</h2>
+      <p class="text-center text-gray-600 mb-6">Fast, Reliable, and Safe Home Sample Collection</p>
+
+      <form id="bookingForm" class="space-y-4 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="flex flex-col">
+            <span class="font-medium">Full Name</span>
+            <input name="full_name" required type="text" placeholder="e.g. Karthik"
+                   class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300" />
+          </label>
+          <label class="flex flex-col">
+            <span class="font-medium">Age</span>
+            <input name="age" required type="number" min="1" placeholder="e.g. 30"
+                   class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300" />
+          </label>
+          <label class="flex flex-col">
+            <span class="font-medium">Gender</span>
+            <select name="gender" required class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300">
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="flex flex-col">
+            <span class="font-medium">Contact Number</span>
+            <input name="contact" required type="tel" placeholder="e.g. 9876543210"
+                   class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300" />
+          </label>
+        </div>
+
+        <label class="flex flex-col">
+          <span class="font-medium">Address</span>
+          <textarea name="address" required rows="2" placeholder="House, Street, Area, City..."
+                    class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300"></textarea>
+        </label>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="flex flex-col">
+            <span class="font-medium">Test / Package Name</span>
+            <input name="test_name" required type="text" placeholder="e.g. Thyroid Profile"
+                   class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300" />
+          </label>
+
+          <label class="flex flex-col">
+            <span class="font-medium">Preferred Date & Time</span>
+            <input name="preferred_time" required type="datetime-local"
+                   class="mt-1 rounded-input border px-3 py-2 focus:ring-2 focus:ring-red-300" />
+          </label>
+        </div>
+
+        <label class="flex flex-col">
+          <span class="font-medium">Upload Prescription (optional)</span>
+          <input name="prescriptionFile" id="prescriptionFile" type="file" accept="image/*,application/pdf"
+                 class="mt-1 text-xs" />
+        </label>
+
+        <input type="hidden" name="recipient_email" value="karthikanu98@outlook.com" />
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
+          <button type="submit"
+                  class="w-full sm:w-auto px-6 py-3 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition text-base">
+            Submit Booking
+          </button>
+          <button type="reset"
+                  class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-400 text-gray-700 hover:bg-gray-100 transition text-base">
+            Reset
+          </button>
+        </div>
+
+        <div id="formStatus" class="text-center text-sm mt-3 text-gray-600"></div>
+      </form>
+    </div>
+  </main>
+
+  <div class="floating-buttons">
+    <div id="contactList" class="contact-list">
+      <a href="https://wa.me/919113607344" target="_blank">📱 +91 9113607344</a>
+      <a href="https://wa.me/919742535524" target="_blank">📱 +91 9742535524</a>
+      <a href="https://wa.me/917483228857" target="_blank">📱 +91 7483228857</a>
+    </div>
+    <div class="float-btn" onclick="toggleContacts()">💬</div>
+  </div>
+
+  <footer class="bg-white text-center text-sm text-gray-500 py-4 shadow-inner">
+    <p>© <span id="year"></span> Thyrocare Bangalore | Tests You Can Trust</p>
+  </footer>
+
+  <script>
+    const EMAILJS_SERVICE_ID = "service_6eoswjy";
+    const EMAILJS_TEMPLATE_ID = "template_ofol37f";
+    const EMAILJS_PUBLIC_KEY = "06sqX7partRGtOmFk";
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    function showStatus(msg, danger = false) {
+      const s = document.getElementById("formStatus");
+      s.innerHTML = msg;
+      s.style.color = danger ? "crimson" : "#333";
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      showStatus("Sending booking...");
+      const fd = new FormData(e.target);
+      const formData = Object.fromEntries(fd.entries());
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formData);
+        showStatus("🎉 Booking sent successfully! Our team will contact you shortly on your registered number.");
+        e.target.reset();
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      } catch (err) {
+        console.error(err);
+        showStatus("Failed to send booking. Please try again later.", true);
+      }
+    });
+
+    function toggleContacts() {
+      const list = document.getElementById("contactList");
+      list.style.display = list.style.display === "flex" ? "none" : "flex";
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
